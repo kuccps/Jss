@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IGUMORI JSS CONVERSATION WEB</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: #002147; /* Light background for the "shirt" */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            max-width: 100%;
+            width: 100%;
+            max-width: 480px;
+            background: #996633; /* White shirt */
+            padding: 30px;
+            margin-top: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .container h2 {
+            text-align: center;
+            color: #003366; /* Navy blue for heading */
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 15px;
+            margin-top: 15px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid #003366; /* Navy blue for borders */
+            box-sizing: border-box;
+            background-color: #f7f7f7; /* Light gray to match the shirt */
+        }
+
+        button {
+            background-color: #003366; /* Navy blue for button */
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #001f33; /* Darker navy blue on hover */
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 22px;
+            color: #003366; /* Navy blue text for result */
+        }
+
+        /* Responsive Design for Small Screens */
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .container h2 {
+                font-size: 24px;
+            }
+
+            input, button {
+                padding: 12px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Marks to Percentage</h2>
+        <form id="markForm" method="POST">
+            <input type="number" name="score" id="score" placeholder="Score obtained" step="0.01" required>
+            <input type="number" name="total" id="total" placeholder="Total marks" step="0.01" required>
+        </form>
+        <div class="result" id="liveResult"></div>
+    </div>
+
+    <script>
+        function getGrade(percentage) {
+            if (percentage >= 80) return "EE";
+            if (percentage >= 60) return "ME";
+            if (percentage >= 40) return "AE";
+            if (percentage >= 0) return "BE";
+        }
+
+        function updateResult() {
+            const score = parseFloat(document.getElementById("score").value);
+            const total = parseFloat(document.getElementById("total").value);
+            const resultDiv = document.getElementById("liveResult");
+
+            if (!isNaN(score) && !isNaN(total) && total !== 0) {
+                const percentage = Math.round((score / total) * 100); // Rounded percentage
+                const grade = getGrade(percentage);
+                resultDiv.innerHTML = `Percentage: ${percentage}%<br>Grade: ${grade}`;
+            } else {
+                resultDiv.innerHTML = "";
+            }
+        }
+
+        document.getElementById("score").addEventListener("input", updateResult);
+        document.getElementById("total").addEventListener("input", updateResult);
+    </script>
+</body>
+</html>
